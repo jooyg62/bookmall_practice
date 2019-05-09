@@ -18,12 +18,12 @@ import bookshop.vo.OrderVo;
 public class BookShop {
 
 	public static void main(String[] args) {
-		insertMemberList();
-		insertCategoryList();
-		insertBookList();
-		insertCartList();
-		Long last_no = insertOrderList();
-		insertOrderDetailList(last_no);
+//		insertMemberList();
+//		insertCategoryList();
+//		insertBookList();
+//		insertCartList();
+//		Long last_no = insertOrderList();
+//		insertOrderDetailList(last_no);
 		
 		
 		displayMemberList();
@@ -185,7 +185,7 @@ public class BookShop {
 			buffer.append("주문번호: " + vo.getNo());
 			buffer.append(", 배송지: " + vo.getAddr());
 			buffer.append(", 주문자명: " + vo.getName());
-			buffer.append(", 책 가격: " + vo.getPrice());
+			buffer.append(", 결제 가격: " + vo.getPrice());
 			
 			System.out.println(buffer.toString());
 		}
@@ -200,10 +200,10 @@ public class BookShop {
 		
 		for(CartVo vo : list) {
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("카테고리명: " + vo.getTitle());
+			buffer.append("카테고리명: " + vo.getCategory_name());
+			buffer.append(", 책 제목: " + vo.getTitle());
 			buffer.append(", 책 가격: " + vo.getPrice());
-			buffer.append(", 책 가격: " + vo.getPrice());
-			buffer.append(", 책 가격: " + vo.getPrice());
+			buffer.append(", 책 수량: " + vo.getCount());
 			
 			System.out.println(buffer.toString());
 		}
