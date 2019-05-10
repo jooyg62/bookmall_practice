@@ -11,10 +11,10 @@ public class OrderDaoTest {
 
 	public static void main(String[] args) {
 		//insert data
-//		Long last_no = insertDaoList();
+		Long last_no = insertDaoList();
 		
 		//insert detail data
-//		insertDetailList(last_no);
+		insertDetailList(last_no);
 		
 		//getList Test
 		getListTest(1L);
@@ -30,8 +30,6 @@ public class OrderDaoTest {
 		vo.setPrice(38900);
 		
 		Long last_no = dao.insertOrder(vo);
-		
-		System.out.println(last_no);
 		
 		return last_no;
 	}

@@ -23,7 +23,9 @@ public class OrderDao {
 			conn = BsUtil.getConnection();
 
 			String sql = 
-					"insert into orders values (null, ?, ?, ?)";
+					"insert into orders \r\n" + 
+					"values (null, ?, ?, ?, concat(date_format(curdate(), '%Y%m%d'), '-'\r\n" + 
+					", lpad((select count(*)+1 from orders a where date_format(curdate(), '%Y%m%d') like substr(a.serial_no, 1, 8)), 4, '0')))";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -119,7 +121,7 @@ public class OrderDao {
 			conn = BsUtil.getConnection();
 	
 			String sql = 
-					" select no, addr, member_no, price, (select name from member where no = member_no)" + 
+					" select no, addr, member_no, price, (select name from member where no = member_no), serial_no" + 
 					" from orders" + 
 					" where member_no = ?";
 			
@@ -134,6 +136,7 @@ public class OrderDao {
 				long member_no = rs.getLong(3);
 				int price = rs.getInt(4);
 				String name = rs.getString(5);
+				String serialNo = rs.getString(6);
 				
 				OrderVo vo = new OrderVo();
 				vo.setNo(no);
@@ -141,6 +144,7 @@ public class OrderDao {
 				vo.setMember_no(member_no);
 				vo.setPrice(price);
 				vo.setName(name);
+				vo.setSerialNo(serialNo);
 								
 				result.add(vo);
 			}

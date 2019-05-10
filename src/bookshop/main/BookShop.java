@@ -18,12 +18,12 @@ import bookshop.vo.OrderVo;
 public class BookShop {
 
 	public static void main(String[] args) {
-//		insertMemberList();
-//		insertCategoryList();
-//		insertBookList();
-//		insertCartList();
-//		Long last_no = insertOrderList();
-//		insertOrderDetailList(last_no);
+		insertMemberList();
+		insertCategoryList();
+		insertBookList();
+		insertCartList();
+		Long last_no = insertOrderList();
+		insertOrderDetailList(last_no);
 		
 		
 		displayMemberList();
@@ -66,8 +66,6 @@ public class BookShop {
 		vo.setPrice(38900);
 		
 		Long lastNo = dao.insertOrder(vo);
-		
-		System.out.println(lastNo);
 		
 		return lastNo;
 	}
@@ -178,7 +176,9 @@ public class BookShop {
 
 	private static void displayOrderList() {
 		System.out.println("================== 5. 주문 리스트 ==================");
-		List<OrderVo> list = new OrderDao().getList(1L);
+		
+		OrderDao dao = new OrderDao();
+		List<OrderVo> list = dao.getList(1L);
 		
 		for(OrderVo vo : list) {
 			StringBuffer buffer = new StringBuffer();
@@ -186,6 +186,22 @@ public class BookShop {
 			buffer.append(", 배송지: " + vo.getAddr());
 			buffer.append(", 주문자명: " + vo.getName());
 			buffer.append(", 결제 가격: " + vo.getPrice());
+			buffer.append(", 시리얼번호: " + vo.getSerialNo());
+			
+			Long no = vo.getNo();
+			
+			List<OrderDetailVo> detailList = dao.getDetailList(no);
+			
+			String title = "";
+			int count = 0;
+			for(OrderDetailVo dvo : detailList) {
+				title = dvo.getTitle();
+				count += dvo.getCount();
+			}
+			
+			vo.setContent(title + " 외 " + count + "권");
+			
+			buffer.append(", 주문 내용: " + vo.getContent());
 			
 			System.out.println(buffer.toString());
 		}
